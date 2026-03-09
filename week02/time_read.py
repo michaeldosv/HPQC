@@ -23,8 +23,7 @@ def main():
 	# calculate time to open and read contents of file
 	run_time = end_time - start_time
 
-	# print to terminal contents of the file and runtime
-	print('The contents of the file :', file)
+	# print to terminal contents runtime
 	print('Time to read file: ', run_time, ' seconds')
 
 if __name__ == "__main__":
