@@ -9,38 +9,44 @@ To examine what would happen if the fundamental rules of MPI were broken, the li
 To observe the runtime of hello_mpi.c using a different number of processes, the programme was altered, recompiled and rerun for 4, 8 and 16 processes. The time results are as follows.
 
 *4 processes*
-  real    0m0.448s
-  user    0m0.132s
-  sys     0m0.166s
+
+    real    0m0.448s
+    user    0m0.132s
+    sys     0m0.166s
 
 *8 processes*
-  real    0m0.466s
-  user    0m0.228s
-  sys     0m0.273s
+
+    real    0m0.466s
+    user    0m0.228s
+    sys     0m0.273s
 
 *16 processes*
-  real    0m0.473s
-  user    0m0.357s
-  sys     0m0.492s
+
+    real    0m0.473s
+    user    0m0.357s
+    sys     0m0.492s
 
 Something that is evident here is that the sys + user time is greater than the real time. This is because the programme is spread across multiple cores working simultaneously hence the sys + user time is the sum of the time taken by each other cores individually. Meanwhile the real time only times the wall-clock time that it takes for the whole process to occur.
 
 A serial variant of hello_mpi.c was written to compare the parallelized version to a serial version of the same programme. The results are as follows for the same numbers of processes tried.
 
 *(serial) 4 processes*
-  real    0m0.007s
-  user    0m0.000s
-  sys     0m0.005s
+
+    real    0m0.007s
+    user    0m0.000s
+    sys     0m0.005s
 
 *(serial) 8 processes*
-  real    0m0.005s
-  user    0m0.004s
-  sys     0m0.000s
+
+    real    0m0.005s
+    user    0m0.004s
+    sys     0m0.000s
 
 *(serial) 16 processes*
-  real    0m0.005s
-  user    0m0.004s
-  sys     0m0.000s
+
+    real    0m0.005s
+    user    0m0.004s
+    sys     0m0.000s
 
 Comparing the above results to the parallelized hello_mpi.c, the real time in the serial programmes is much closer to the sum of the sys + user time. This is to be anticipated as the serial process runs on one core and handles the tasks sequentially. The parallelized programmes also take noticeably longer to run than the serial versions indicating this type of task does not benefit from parallelization as it takes longer to segment the task into chunks than to just handle it sequentially. 
 
@@ -64,11 +70,11 @@ A flowchart of proof.c was drawn and is available as proof.flow.png in the topic
 
 The function root_task() is responsible for summing the results of the other processes. This can be represented as
 
-$Total = \sum_{i=1}^{N-1} /left( i A /right)
+$Total = \sum_{i=1}^{N-1} /left( i A /right)$
 
 Where N is the uni_size, A is the num_arg both defined by the user. A remains constant throughout the summation so it can be factored out. 
 
-$Total = A \sum_{i=1}^{N-1} /left( i /right)
+$Total = A \sum_{i=1}^{N-1} /left( i /right)$
 
 This is the formula behind what the programme is doing. 
 
@@ -91,64 +97,72 @@ The programme vector_serial was modified to create a non-trivial vector by intro
 The serial programme was benchmarked internally and externally using different inputs. The results include the sum of the vector, internal benchmark and external benchmarks are as follows.
 
 *Input : 10*
-  Sum: 45
-  Internal Benchmark : 0.000003 seconds
-  real    0m0.004s
-  user    0m0.000s
-  sys     0m0.004s
+
+    Sum: 45
+    Internal Benchmark : 0.000003 seconds
+    real    0m0.004s
+    user    0m0.000s
+    sys     0m0.004s
 
 *Input : 10000*
-  Sum: 49995000
-  Internal Benchmark : 0.000101 seconds
-  real    0m0.007s
-  user    0m0.004s
-  sys     0m0.001s
+
+    Sum: 49995000
+    Internal Benchmark : 0.000101 seconds
+    real    0m0.007s
+    user    0m0.004s
+    sys     0m0.001s
 
 *Input : 65000*
-  Sum: 2112467500
-  Internal Benchmark : 0.000460 seconds
-  real    0m0.005s
-  user    0m0.005s
-  sys     0m0.000s
+
+    Sum: 2112467500
+    Internal Benchmark : 0.000460 seconds
+    real    0m0.005s
+    user    0m0.005s
+    sys     0m0.000s
 
 *Input : 100000*
-Sum: 704982704
-Internal Benchmark : 0.000708 seconds
-real    0m0.006s
-user    0m0.006s
-sys     0m0.000s
+
+    Sum: 704982704
+    Internal Benchmark : 0.000708 seconds
+    real    0m0.006s
+    user    0m0.006s
+    sys     0m0.000s
 
 A parallel version of the vector_serial.c programme was written using MPI to divide the vector into local chunks which would be processes on separate cores. This was done to create a point of comparison between the serial version and parallelized version.
 
 The parallel version of the programme was run using the same range of inputs as the serial for comparison.
 
 *Input : 10*
-  Sum: 45
-  Internal Benchmark : 0.000003 seconds
-  real    0m0.421s
-  user    0m0.018s
-  sys     0m0.044s
+
+    Sum: 45
+    Internal Benchmark : 0.000003 seconds
+    real    0m0.421s
+    user    0m0.018s
+    sys     0m0.044s
 
 *Input : 10000*
-  Sum: 49995000
-  Internal Benchmark : 0.000062 seconds
-  real    0m0.369s
-  user    0m0.025s
-  sys     0m0.032s
+
+    Sum: 49995000
+    Internal Benchmark : 0.000062 seconds
+    real    0m0.369s
+    user    0m0.025s
+    sys     0m0.032s
 
 *Input : 65000*
-  Sum: 2112467500
-  Internal Benchmark : 0.000207 seconds
-  real    0m0.424s
-  user    0m0.033s
-  sys     0m0.025s
+
+    Sum: 2112467500
+    Internal Benchmark : 0.000207 seconds
+    real    0m0.424s
+    user    0m0.033s
+    sys     0m0.025s
 
 *Input : 100000*
-  Sum: 704982704
-  Internal Benchmark : 0.000673 seconds
-  real    0m0.426s
-  user    0m0.026s
-  sys     0m0.032s
+
+    Sum: 704982704
+    Internal Benchmark : 0.000673 seconds
+    real    0m0.426s
+    user    0m0.026s
+    sys     0m0.032s
 
 The above results show a lot. What is immediately clear is that there is an overflow point beyond inputs of 100,000 or more which is evidenced by the fact the results of the sum are not accurate. This occurs due to the limit with integers in C which are 32 bit. In these cases the output sum of the vector components is larger than what 32 bit integers can display.
 The internal benchmarks show that parallelization is successful at speeding up the programme for inputs 10,000 and 65,000. The speedup is not evident for input 10 as this is too small a value to quantify the benchmark time. 
