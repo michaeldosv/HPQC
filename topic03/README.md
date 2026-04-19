@@ -70,11 +70,11 @@ A flowchart of proof.c was drawn and is available as proof.flow.png in the topic
 
 The function root_task() is responsible for summing the results of the other processes. This can be represented as
 
-$Total = \sum_{i=1}^{N-1} /left( i A /right)$
+$Total = \sum_{i=1}^{N-1} ( i * A )$
 
 Where N is the uni_size, A is the num_arg both defined by the user. A remains constant throughout the summation so it can be factored out. 
 
-$Total = A \sum_{i=1}^{N-1} /left( i /right)$
+$Total = A * \sum_{i=1}^{N-1} ( i )$
 
 This is the formula behind what the programme is doing. 
 
