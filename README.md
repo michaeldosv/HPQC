@@ -4,8 +4,6 @@ This is all of the assigned coursework for the HPQC module for 2025/26 academic 
 
 ## Guide to Repository
 
-Each week's work is contained within a new folder i.e. /weekXX/ where XX indicates the week number.
+Each week's work is contained within a new folder i.e. /topicXX/ where XX indicates the topic number.
 
-A README file is contained within each week's folder. This includes the results and discussion of each week's activities and code.
-
-**Edit this section as work is done and structure coursework is changed**
+A README file is contained within each folder. This includes the results and discussion of each week's activities and code.
