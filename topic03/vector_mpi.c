@@ -45,17 +45,29 @@ int main(int argc, char **argv) {
 
 	// add all local vector sums together to get final sum
 	int global_sum = 0;
-	// store the result in global_sum on rank 0.
-	MPI_Reduce(&local_sum, &global_sum, 1, MPI_INT, MPI_SUM, 0, MPI_COMM_WORLD);
+	// root adds its local sum first and then receives sum from other processes
+	if (rank == 0) {
+                global_sum = local_sum;
+                int incoming_sum = 0;
+
+                for (int sender = 1; sender < size; sender++) {
+                        MPI_Recv(&incoming_sum, 1, MPI_INT, sender, 0, MPI_COMM_WORLD, MPI_STATUS_IGNORE);
+                        global_sum += incoming_sum;
+                }
+        } else {
+                // client processes send their sums to root process
+                MPI_Send(&local_sum, 1, MPI_INT, 0, 0, MPI_COMM_WORLD);
+        }
 
 	// end the timer and compute the total time taken
 	double end_time = MPI_Wtime();
 	double benchmark = end_time - start_time;
 
-	// print the sum of the vector and internal benchmark time
+	// print the sum of the vector and internal benchmark time and the sum of MPI_Send() and MPI_Recv()
 	if (rank == 0) {
 		printf("Sum: %d\n", global_sum);
 		printf("Internal Benchmark : %f seconds", benchmark);
+		printf("Send and Receive Sum %d\n", global_sum);
 	}
 
 	// free up memory and exit MPI
