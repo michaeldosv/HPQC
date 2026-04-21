@@ -43,10 +43,10 @@ def probQubit(name):
 
 
 # function to take measurement of qubit
-def measureQubit():
+def measureQubit(name):
         global workspace
         global namestack
-        prob = probQubit() # call probQubit() to measure probability of qubit at top of stack
+        prob = probQubit(name) # call probQubit(name) to measure probability of qubit at top of stack
         measurement = np.random.choice(2,p=prob) # select 0 or 1
         workspace = (workspace[:,[measurement]] / np.sqrt(prob[measurement])) # remove measured qubit from stack
         namestack.pop()
@@ -95,6 +95,10 @@ X_gate = np.array([[0,1],
 H_gate = np.array([[1,1],
                  [1,-1]]) * np.sqrt(1/2)
 
+# Pauli Z gate
+Z_gate = np.array([[1, 0], 
+                   [0, -1]])
+
 # SWAP gate
 SWAP_gate = np.array([[1, 0, 0, 0],
                       [0, 0, 1, 0],
@@ -129,7 +133,7 @@ print("After Q2 : ", np.reshape(workspace,(1,-1)))
 
 # try Grover's search
 workspace = np.array([[1.]])
-groverSearch(20)
+groverSearch(6)
 
 # apply X_gate to qubit at the top of the stack
 applyGate(X_gate, "Q2")
@@ -143,7 +147,7 @@ for i in range(20):
         pushQubit("Q3",[1,1])
         pushQubit("Q4",[1,0])   
 
-TOFF3_gate("Q1","Q2","Q3","Q4")  
-print("".join([measureQubit(q) for q in
-                   ["Q1","Q2","Q3","Q4"]]), end=",")
+        TOFF3_gate("Q1","Q2","Q3","Q4")  
+        print("".join([measureQubit(q) for q in
+                        ["Q1","Q2","Q3","Q4"]]), end=",")
 
